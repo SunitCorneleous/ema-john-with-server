@@ -1,0 +1,30 @@
+.header {
+  height: 80px;
+  background-color: #1c2b35;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 112px;
+}
+
+.header a {
+  text-decoration: none;
+  color: #ffffff;
+  padding: 0 22px;
+  font-size: 17px;
+}
+
+.header a:hover {
+  color: #e99816;
+}
+
+.btn-logout {
+  padding: 10px 8px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: rgb(224, 88, 88);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+}

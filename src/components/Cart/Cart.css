@@ -1,0 +1,33 @@
+.cart {
+  position: sticky;
+  top: 0;
+
+  padding: 30px;
+
+  font-size: 1.2rem;
+  height: 100vh;
+}
+
+.cart h4 {
+  padding: 0 25px 15px;
+
+  font-size: 1.5rem;
+}
+
+.btn {
+  width: 100%;
+  font-size: 1.1rem;
+  margin: 5px 0;
+  padding: 8px 0;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-red {
+  background-color: #ff3030;
+}
+.btn-orange {
+  background-color: #ff9900;
+}
