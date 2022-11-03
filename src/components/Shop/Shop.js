@@ -11,19 +11,28 @@ import { Link } from "react-router-dom";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
+  const [count, setCount] = useState(0);
   const [cart, setCart] = useState([]);
 
+  //pagination
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
+  const pages = Math.ceil(count / size);
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/products?page=${page}&size=${size}`)
+      .then(res => res.json())
+      .then(data => {
+        setProducts(data.products);
+        setCount(data.count);
+      });
+  }, [page, size]);
+
+  // clear cart
   const HandleClearCart = () => {
     setCart([]);
     deleteShoppingCart();
   };
-
-  // fetch product datas
-  useEffect(() => {
-    fetch("products.json")
-      .then(res => res.json())
-      .then(data => setProducts(data));
-  }, []);
 
   // get stored cart from local storage
   useEffect(() => {
@@ -31,7 +40,7 @@ const Shop = () => {
     const savedCart = [];
 
     for (const id in storedCart) {
-      const storedProducts = products.find(product => product.id === id);
+      const storedProducts = products.find(product => product._id === id);
 
       if (storedProducts) {
         const quantity = storedCart[id];
@@ -45,20 +54,20 @@ const Shop = () => {
 
   // add products to cart
   const addToCart = selectedProduct => {
-    const exists = cart.find(product => product.id === selectedProduct.id);
+    const exists = cart.find(product => product._id === selectedProduct._id);
     let newCart;
 
     if (!exists) {
       selectedProduct.quantity = 1;
       newCart = [...cart, selectedProduct];
     } else {
-      const rest = cart.filter(product => product.id !== selectedProduct.id);
+      const rest = cart.filter(product => product._id !== selectedProduct._id);
       exists.quantity = exists.quantity + 1;
       newCart = [...rest, exists];
     }
 
     setCart(newCart);
-    addToDb(selectedProduct.id);
+    addToDb(selectedProduct._id);
   };
 
   return (
@@ -67,7 +76,7 @@ const Shop = () => {
       <div className="products-container">
         {products.map(product => (
           <Product
-            key={product.id}
+            key={product._id}
             product={product}
             handler={addToCart}
           ></Product>
@@ -82,6 +91,31 @@ const Shop = () => {
             <button className="btn btn-orange">Review Order</button>
           </Link>
         </Cart>
+      </div>
+
+      {/* pagination */}
+      <div className="pagination">
+        <p>
+          Current page: {page} & Size {size}
+        </p>
+        {[...Array(pages).keys()].map(number => (
+          <button
+            key={number}
+            onClick={() => setPage(number)}
+            className={number === page ? "selected" : ""}
+          >
+            {number + 1}
+          </button>
+        ))}
+
+        <select onChange={event => setSize(event.target.value)}>
+          <option value="5">5</option>
+          <option value="10" selected>
+            10
+          </option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
       </div>
     </div>
   );

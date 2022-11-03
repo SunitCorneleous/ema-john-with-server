@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLoaderData } from "react-router-dom";
 
 const About = () => {
-  const products = useLoaderData();
+  const { products } = useLoaderData();
 
   // console.log(products);
   return (
@@ -15,7 +15,7 @@ const About = () => {
         deleniti quibusdam exercitationem.
       </p>
       <p>
-        <strong>Total products: {products.length}</strong>
+        <strong>Total products: {products?.length}</strong>
       </p>
       <Link to="/">Back to Home</Link>
     </div>

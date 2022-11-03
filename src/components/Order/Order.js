@@ -6,11 +6,11 @@ import Cart from "../Cart/Cart";
 import ReviewItem from "../ReviewItem/ReviewItem";
 
 const Order = () => {
-  const { products, storedCart } = useLoaderData();
+  const { storedCart } = useLoaderData();
   const [cart, setCart] = useState(storedCart);
 
   const handleRemoveItem = id => {
-    const itemsLeft = cart.filter(product => product.id !== id);
+    const itemsLeft = cart.filter(product => product._id !== id);
 
     setCart(itemsLeft);
     removeFromDb(id);
@@ -26,7 +26,7 @@ const Order = () => {
       <div className="items-container">
         {cart.map(product => (
           <ReviewItem
-            key={product.id}
+            key={product._id}
             product={product}
             deleteHandler={handleRemoveItem}
           ></ReviewItem>

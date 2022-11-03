@@ -1,11 +1,8 @@
 # ema-john shopping app
 
-## used technologies
+## used technologies:
 
 - react js
-
 - plain css
-
 - firebase
-
-* react router
+- react router

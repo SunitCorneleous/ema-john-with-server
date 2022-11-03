@@ -11,7 +11,7 @@ const Header = () => {
     <div className="header">
       <img src={Logo} alt="logo" />
       <div>
-        <Link to="/shop">Shop</Link>
+        <Link to="/">Shop</Link>
         <Link to="/order">Orders</Link>
         <Link to="/inventory">Inventory</Link>
         <Link to="/about">About</Link>
