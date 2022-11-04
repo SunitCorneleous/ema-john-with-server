@@ -39,17 +39,28 @@ const Shop = () => {
     const storedCart = getStoredCart();
     const savedCart = [];
 
-    for (const id in storedCart) {
-      const storedProducts = products.find(product => product._id === id);
+    const ids = Object.keys(storedCart);
 
-      if (storedProducts) {
-        const quantity = storedCart[id];
-        storedProducts.quantity = quantity;
-        savedCart.push(storedProducts);
-      }
-    }
+    fetch("http://localhost:5000/productsByIds", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(ids),
+    })
+      .then(res => res.json())
+      .then(data => {
+        for (const id in storedCart) {
+          const storedProducts = data.find(product => product._id === id);
 
-    setCart(savedCart);
+          if (storedProducts) {
+            const quantity = storedCart[id];
+            storedProducts.quantity = quantity;
+            savedCart.push(storedProducts);
+          }
+        }
+        setCart(savedCart);
+      });
   }, [products]);
 
   // add products to cart
